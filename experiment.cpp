@@ -181,9 +181,11 @@ public:
         while (head->next != nullptr)
         {
             node *ptr = head->next;
+            delete head->dat.shape;
             delete head;
             head = ptr;
         }
+        delete head->dat.shape;
         delete head;
         head = nullptr;
     }
@@ -301,7 +303,9 @@ int main()
         }
     }
 
-    std::cout << "Reviewing..." << std::endl;
+    std::cout << "\n\n\nReviewing..." << std::endl;
+
+    size_t total = 0, correct = 0;
     for (linkedList<quadrangle_t *>::iterator itr = ++list.begin(); itr != list.end(); itr++)
     {
         typename node::data data = *itr;
@@ -309,12 +313,15 @@ int main()
         if (data.answer == data.shape->area())
         {
             rightOrWrong = 'V';
+            correct++;
         }
         else
         {
             rightOrWrong = 'X';
         }
+        total++;
         data.shape->toString();
         std::cout << data.shape->area() << ", answer=" << data.answer << " " << rightOrWrong << std::endl;
     }
+    std::cout << std::endl << "Total: " << total << ", Correct: " << correct << std::endl;
 }
